@@ -1,9 +1,40 @@
 {% extends 'base.html.twig' %}
+{% set title = "Ajouter un livre"%}
 
-{% block title %}{{ parent() }} - Ajouter un livre{% endblock %}
+{% block title %}{{ parent() }} - {{title}}{% endblock %}
 
 {% block body %}
-<h2> Ajouter un livre<h2>
+<h2> {{title}}<h2>
+<div>
+<h6>Formulaire de creation de livre</h6>
+    {{ form_start(form)}}
+    <div class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_errors(form.title) }}
+        {{ form_help(form.title) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+        {{ form_help(form.description) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.cover) }}
+        {{ form_widget(form.cover) }}
+        {{ form_errors(form.cover) }}
+        {{ form_help(form.cover) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.price) }}
+        {{ form_widget(form.price) }}
+        {{ form_errors(form.price) }}
+        {{ form_help(form.price) }}
+    </div>
+
+    {{ form_end(form, {'render_rest': false})}}
+</div>
 
 
 {% endblock %}
