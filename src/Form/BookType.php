@@ -5,13 +5,16 @@ namespace App\Form;
 use App\Entity\Book;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class BookType extends AbstractType
 {
@@ -42,6 +45,15 @@ class BookType extends AbstractType
                 ],
 
                 // Constraints 
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Le titre du livre est obligatoire",
+                    ]),
+                    new Length([
+                        'max' => 180,
+                        'maxMessage' => "Le titre ne peux contenir que {{ limit }} caractères"
+                    ]),
+                ],
             ])
 
             // Description
@@ -94,10 +106,26 @@ class BookType extends AbstractType
                 ],
 
                 // Constraints 
+                'constraints' => [
+                    new Image([
+                        'mimeTypes'=> [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => "Format accepter: {{ type }}.",
+                        'maxSize' => "2M",
+                        'maxSizeMessage'=> "La taille du fichier ne doit pas dépasser {{ limit }}{{ suffix }}"
+                    ]),
+
+                    new Length([
+                        'max' => 180,
+                        'maxMessage' => "Le titre ne peux contenir que {{ limit }} caractères."
+                    ]),
+                ],
             ])
 
             // Price
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                     // Label
                     'label' => "Prix du livre",
                     'label_attr' => [
@@ -122,6 +150,13 @@ class BookType extends AbstractType
                     ],
     
                     // Constraints 
+                    'constraints' => [
+                        new GreaterThan([
+                            'value' => 0,
+                            'message' => "Le prix doit être superieur à {{ value }}"
+                        ])
+                    ],
+                    
             ])
         ;
     }

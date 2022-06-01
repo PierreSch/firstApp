@@ -7,7 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Repository\BookRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/book", name="book:")
@@ -17,22 +20,44 @@ class BookController extends AbstractController
     /**
      * @Route("s", name="index")
      */
-    public function index(): Response
+    public function index(BookRepository $bookRepository): Response
     {
+        $books =$bookRepository->findAll();
+
         return $this->render('book/index.html.twig', [
-            'controller_name' => 'BookController',
+            'books' => $books,
         ]);
     }
     /**
      * @Route("", name="create")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
     {
         $book = new Book;
        
         $form = $this->createForm(BookType::class, $book);
 
         $form->handleRequest($request);
+
+        if( $form->isSubmitted() )
+        {
+            $validator->validate($book);
+
+            if( $form->isValid() )
+            {
+                //enregistrement BDD
+                 $em = $doctrine->getManager();
+                 $em->persist( $book );
+                 $em->flush(); 
+
+                //Message de succes
+                $this->addFlash('success', "Le livre ".$book->getTitle()." à été ajouté.");
+
+                //redirection
+                return $this->redirectToRoute("book:index");
+            }
+            
+        }
 
         $form = $form->createView();
 
@@ -43,8 +68,10 @@ class BookController extends AbstractController
     /**
      * @Route("/{id}", name="show")
      */
-    public function show(): Response
+    public function show(Book $book): Response
     {
-
+        return $this->render('book/show.html.twig',[
+                'book' => $book
+        ]);
     }
 }

@@ -7,7 +7,8 @@
 <h2> {{title}}<h2>
 <div>
 <h6>Formulaire de creation de livre</h6>
-    {{ form_start(form)}}
+    {{ form_start(form, {'attr': {'novalidate':'novalidate'}})}}
+    {{ form_widget(form._token)}}
     <div class="form-group">
         {{ form_label(form.title) }}
         {{ form_widget(form.title) }}
@@ -32,6 +33,8 @@
         {{ form_errors(form.price) }}
         {{ form_help(form.price) }}
     </div>
+
+    <button type="submit">Ajouter le livre</button>
 
     {{ form_end(form, {'render_rest': false})}}
 </div>
