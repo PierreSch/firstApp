@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% set title = "Modifier le livre" %}
+
+{% block title %}{{ parent() }} - {{title}}{% endblock %}
+{% block body %}
+<h2>{{ title }}</h2>
+
+{{ include ("book/_form.html.twig", {
+    btn_label: "Modifier le livre"
+}) }}
+
+
+{% endblock %}

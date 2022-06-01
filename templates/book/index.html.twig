@@ -19,7 +19,7 @@
             <td>{{book.title}}</td>
             <td>
                 <a href="{{ path('book:show', {id: book.id}) }}">show</a>
-                <a href="">edit</a>
+                <a href="{{ path('book:edit', {id: book.id}) }}">edit</a>
             </td>
         </tr>
     {% endfor %}

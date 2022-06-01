@@ -74,4 +74,39 @@ class BookController extends AbstractController
                 'book' => $book
         ]);
     }
+    /**
+     * @Route("/{id}/edit", name="edit")
+     */
+    public function update(Book $book,Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->createForm(BookType::class, $book);
+
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() )
+        {
+            $validator->validate($book);
+
+            if( $form->isValid() )
+            {
+                //enregistrement BDD
+                 $em = $doctrine->getManager();
+                 $em->persist( $book );
+                 $em->flush(); 
+
+                //Message de succes
+                $this->addFlash('success', "Le livre ".$book->getTitle()." à été modifier.");
+
+                //redirection
+                return $this->redirectToRoute("book:index");
+            }
+            
+        }
+
+        $form = $form->createView();
+        return $this->render('book/update.html.twig',[
+            'book' => $book,
+            'form' => $form,
+        ]);
+    }
 }
