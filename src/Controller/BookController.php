@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class BookController extends AbstractController
 {
     /**
-     * @Route("s", name="index")
+     * @Route("s", name="index", methods={"HEAD", "GET"})
      */
     public function index(BookRepository $bookRepository): Response
     {
@@ -29,7 +29,7 @@ class BookController extends AbstractController
         ]);
     }
     /**
-     * @Route("", name="create")
+     * @Route("", name="create", methods={"HEAD", "GET", "POST"})
      */
     public function create(Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
     {
@@ -54,7 +54,9 @@ class BookController extends AbstractController
                 $this->addFlash('success', "Le livre ".$book->getTitle()." à été ajouté.");
 
                 //redirection
-                return $this->redirectToRoute("book:index");
+                return $this->redirectToRoute("book:show", [
+                    'id' => $book->getId()
+                ]);
             }
             
         }
@@ -66,7 +68,7 @@ class BookController extends AbstractController
         ]);
     }
     /**
-     * @Route("/{id}", name="show")
+     * @Route("/{id}", name="show", methods={"HEAD", "GET"})
      */
     public function show(Book $book): Response
     {
@@ -75,7 +77,7 @@ class BookController extends AbstractController
         ]);
     }
     /**
-     * @Route("/{id}/edit", name="edit")
+     * @Route("/{id}/edit", name="edit", methods={"HEAD", "GET", "POST"})
      */
     public function update(Book $book,Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): Response
     {
@@ -98,7 +100,9 @@ class BookController extends AbstractController
                 $this->addFlash('success', "Le livre ".$book->getTitle()." à été modifier.");
 
                 //redirection
-                return $this->redirectToRoute("book:index");
+                return $this->redirectToRoute("book:show", [
+                    'id' => $book->getId()
+                ]);
             }
             
         }
@@ -109,4 +113,23 @@ class BookController extends AbstractController
             'form' => $form,
         ]);
     }
+    /**
+     * @Route("/{id}/delete", name="delete", methods={"HEAD", "GET", "DELETE"})
+     */
+    public function delete(Book $book,Request $request, ManagerRegistry $doctrine): Response
+    {
+        if($request->getMethod() === 'DELETE')
+        {
+            $em = $doctrine->getManager();
+            $em->remove($book);
+            $em->flush();
+
+            return $this->redirectToRoute("book:index");
+        }
+
+        return $this->render('book/delete.html.twig',[
+                'book' => $book
+        ]);
+    }
+
 }

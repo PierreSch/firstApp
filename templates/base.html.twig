@@ -14,6 +14,12 @@
         {% endblock %} #}
     </head>
     <body>
+        <header class="main-header">
+            <nav>
+                <a href="{{ path('app_homepage')}}">Accueil</a>
+                <a href="{{ path('book:index')}}">Livres</a>    
+            </nav>
+        </header>
     {% for message  in app.flashes('success') %}
         <div class="alert alert-success">
             {{message}}
