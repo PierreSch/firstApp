@@ -34,7 +34,6 @@ class BookType extends AbstractType
 
                 // Attribute
                 'attr' => [
-                    'class' => "form-control",
                     'placeholder' => "Saisir le titre du livre",
                 ],
 
@@ -60,16 +59,13 @@ class BookType extends AbstractType
             ->add('description', TextareaType::class, [
                 // Label
                 'label' => "Description du livre",
-                'label_attr' => [
-                    'class' => "form-label-test",
-                ],
+                
 
                 // Make it required
                 'required' => false,
 
                 // Attribute
                 'attr' => [
-                    'class' => "form-control",
                     'placeholder' => "Saisir la description du livre",
                 ],
 
@@ -86,16 +82,13 @@ class BookType extends AbstractType
             ->add('cover', FileType::class, [
                 // Label
                 'label' => "Couverture du livre",
-                'label_attr' => [
-                    'class' => "form-label-test",
-                ],
+                
 
                 // Make it required
                 'required' => false,
 
                 // Attribute
                 'attr' => [
-                    'class' => "form-control",
                     'multiple' => true,
                 ],
 
@@ -137,7 +130,6 @@ class BookType extends AbstractType
     
                     // Attribute
                     'attr' => [
-                        'class' => "form-control",
                         'placeholder' => "Saisir le prix du livre",
                         'step'=>"0.01",
                         'min'=>"0.00",
