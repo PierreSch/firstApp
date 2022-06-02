@@ -2,29 +2,30 @@
 {% set title = "Liste des livres" %}
 {% block title %}{{ parent() }} - {{title}}{% endblock %}
 {% block body %}
-<h2>{{ title }}</h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Titre</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for book in books %}
-        <tr>
-            <td>{{book.id}}</td>
-            <td>{{book.title}}</td>
-            <td>
-                <a href="{{ path('book:show', {id: book.id}) }}">show</a>
-                <a href="{{ path('book:edit', {id: book.id}) }}">edit</a>
-                <a href="{{ path('book:delete', {id: book.id}) }}">X</a>
-            </td>
-        </tr>
-    {% endfor %}
-        
-    </tbody>
-</table>
+<h2 class="my-5 text-center">{{ title }}</h2>
+<div class="row justify-content-center">
+    <table class="col-3 text-center">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Titre</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.title}}</td>
+                <td>
+                    <a href="{{ path('book:show', {id: book.id}) }}">show</a>
+                    <a href="{{ path('book:edit', {id: book.id}) }}">edit</a>
+                    <a href="{{ path('book:delete', {id: book.id}) }}">X</a>
+                </td>
+            </tr>
+        {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
 {% endblock %}

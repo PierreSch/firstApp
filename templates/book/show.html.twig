@@ -2,27 +2,31 @@
 {% set title = "Livre: " ~ book.title %}
 {% block title %}{{ parent() }} - {{title}}{% endblock %}
 {% block body %}
-<h2>{{ title }}</h2>
+<h2 class="my-5 text-center">{{ title }}</h2>
+<div class="container">
+    <div>
+        <strong>ID</strong>
+        {{ book.id }}
+    </div>
+    <div>
+        <strong>title</strong>
+        {{ book.title }}
+    </div>
+    <div> 
+        <strong>description</strong>
+        {% if book.description is null %}
+            <em>Pas de description</em>
+        {% else %}
+            {{ book.description }}
+        {% endif %}
+    </div>
+    <div>
+        <strong>prix</strong>
+        {{ book.price }}
+    </div>
+    <a href="{{ path('book:edit', {id: book.id}) }}">edit</a>
+    <a href="{{ path('book:delete', {id: book.id}) }}">X</a>
+</div>
 
-<div>
-    <strong>ID</strong>
-    {{ book.id }}
-</div>
-<div>
-    <strong>title</strong>
-    {{ book.title }}
-</div>
-<div> 
-    <strong>description</strong>
-    {% if book.description is null %}
-        <em>Pas de description</em>
-    {% else %}
-        {{ book.description }}
-    {% endif %}
-</div>
-<div>
-    <strong>prix</strong>
-    {{ book.price }}
-</div>
 
 {% endblock %}

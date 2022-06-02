@@ -2,31 +2,40 @@
 
 {{ form_start(form, {'attr': {'novalidate':'novalidate'}})}}
     {{ form_widget(form._token)}}
-    <div class="form-group">
-        {{ form_label(form.title) }}
-        {{ form_widget(form.title) }}
-        {{ form_errors(form.title) }}
-        {{ form_help(form.title) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-        {{ form_errors(form.description) }}
-        {{ form_help(form.description) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.cover) }}
-        {{ form_widget(form.cover) }}
-        {{ form_errors(form.cover) }}
-        {{ form_help(form.cover) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.price) }}
-        {{ form_widget(form.price) }}
-        {{ form_errors(form.price) }}
-        {{ form_help(form.price) }}
-    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                    {{ form_help(form.title) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_help(form.description) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.cover) }}
+                    {{ form_widget(form.cover) }}
+                    {{ form_errors(form.cover) }}
+                    {{ form_help(form.cover) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.price) }}
+                    {{ form_widget(form.price) }}
+                    {{ form_errors(form.price) }}
+                    {{ form_help(form.price) }}
+                </div>
 
-    <button type="submit">{{ btn_label | default("Ajouter le livre")}}</button>
+                <button class="btn btn-primary" type="submit">{{ btn_label | default("Ajouter le livre")}}</button>            
+            </div>
+        </div>
+        
+
+    </div>
+    
 
     {{ form_end(form, {'render_rest': false})}}
